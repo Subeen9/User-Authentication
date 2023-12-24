@@ -1,24 +1,33 @@
 import React, {useRef, useState} from 'react';
-import { Card, Button, Form } from 'react-bootstrap';
+import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 function Signin() {
   const {signIn} = useAuth();
   const[error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault();
+    console.log("function called");
     if(passwordRef.current.value !== confirmPasswordRef.current.value){
       return setError('The password does not matches');
     }
-    try{
-      signIn(emailRef.current.value, passwordRef.current.value)
+    if(passwordRef.current.value<6){
+      return setError('Password too weak. Must be greater than 6 character')
     }
-    catch{
-      setError('');
-      setError("Unable to create an account")
+    try {
+      setLoading(true);
+      console.log("email:", emailRef.current.value);
+      console.log("password:", passwordRef.current.value);
+      await signIn(emailRef.current.value, passwordRef.current.value);
+    } catch(e) {
+      console.log("Error", e)
+      setError('Too weak password. Unable to create account');
     }
+    
+    setLoading(false);
     
   }
 
@@ -26,8 +35,9 @@ function Signin() {
     <>
       <Card style={{maxWidth: "300px", margin: "auto", marginTop: "40px"}}>
         <Card.Title style={{textAlign:"center"}}>Sign Up</Card.Title>
-   
+
         <Card.Body>
+          {error && <Alert variant='danger'>{error}</Alert>}
             <Form>
           <Form.Group className='mb-3' controlId="validationCustom01">
             <Form.Label>First Name</Form.Label>
@@ -52,7 +62,16 @@ function Signin() {
           </Form>
         </Card.Body>
         <Card.Footer style={{textAlign: "center"}}>Already a Member Login here</Card.Footer>
-        <Button variant="primary" style={{maxWidth:"90px",margin: "auto" , marginTop: "10px", marginBottom: "10px"}}>SignIn</Button>
+        <Button
+
+  disabled={loading}
+  variant="primary"
+  style={{maxWidth:"90px", margin: "auto" , marginTop: "10px", marginBottom: "10px"}}
+  onClick={handleSubmit}
+>
+  Sign In
+</Button>
+
         
       </Card>
     </>
