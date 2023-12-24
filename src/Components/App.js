@@ -1,18 +1,27 @@
 import React from "react";
-import ReactDom from "react-dom";
-import {Container} from "react-bootstrap"
 import Signin from "./Signin";
 import AuthState from "../context/AuthState";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
-<>
-<AuthState>
-<Container>
-<Signin/>
-</Container>
-</AuthState>
-</>
+    <>
+      <Router>
+        <AuthState>
+          <Routes>
+          <Route element={<PrivateRoute/>}>
+            <Route exact path="/" element={<Dashboard/>}/>
+          </Route>
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/login" element={<Login />} />
+            
+          </Routes>
+        </AuthState>
+      </Router>
+    </>
   );
 }
 

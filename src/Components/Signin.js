@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
 import { Card, Button, Form, Alert } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 function Signin() {
   const {signIn} = useAuth();
@@ -8,6 +9,7 @@ function Signin() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  let navigate = useNavigate()
   async function handleSubmit(e){
     e.preventDefault();
     console.log("function called");
@@ -22,9 +24,10 @@ function Signin() {
       console.log("email:", emailRef.current.value);
       console.log("password:", passwordRef.current.value);
       await signIn(emailRef.current.value, passwordRef.current.value);
+      navigate("/")
     } catch(e) {
       console.log("Error", e)
-      setError('Too weak password. Unable to create account');
+      setError(' Unable to create account');
     }
     
     setLoading(false);
@@ -61,7 +64,7 @@ function Signin() {
           </Form.Group>
           </Form>
         </Card.Body>
-        <Card.Footer style={{textAlign: "center"}}>Already a Member Login here</Card.Footer>
+        <Card.Footer style={{textAlign: "center"}}>Already a Member?  <Link to= "/login"> Login </Link></Card.Footer>
         <Button
 
   disabled={loading}
