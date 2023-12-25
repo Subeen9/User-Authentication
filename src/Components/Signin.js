@@ -13,7 +13,7 @@ function Signin() {
   let navigate = useNavigate()
   async function handleSubmit(e){
     e.preventDefault();
-    console.log("function called");
+    //console.log("function called");
     if(passwordRef.current.value !== confirmPasswordRef.current.value){
       return setError('The password does not matches');
     }
@@ -22,8 +22,8 @@ function Signin() {
     }
     try {
       setLoading(true);
-      console.log("email:", emailRef.current.value);
-      console.log("password:", passwordRef.current.value);
+     // console.log("email:", emailRef.current.value);
+      //console.log("password:", passwordRef.current.value);
       await signIn(emailRef.current.value, passwordRef.current.value);
       toast.success("You are signed in")
       navigate("/")
