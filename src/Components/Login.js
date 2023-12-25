@@ -2,6 +2,8 @@ import React, {useRef, useState} from 'react';
 import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import{Link, useNavigate} from "react-router-dom"
+import { ToastContainer,toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 function Login() {
     const {login} = useAuth();
     const[error, setError] = useState('');
@@ -17,6 +19,7 @@ function Login() {
         setLoading(true);
         console.log("email:", emailRef.current.value);
         console.log("password:", passwordRef.current.value);
+        toast.success("You are signed in")
         await login(emailRef.current.value, passwordRef.current.value);
         navigate("/");
 
@@ -47,6 +50,7 @@ function Login() {
               <Form.Control required placeholder="Password" type="password" ref={passwordRef} />
             </Form.Group>
             </Form>
+            <Form.Group style={{textAlign:"center", marginTop: "10px"}}><Link to ="/changePassword" >Forgot Password?</Link></Form.Group>
           </Card.Body>
           <Card.Footer style={{textAlign: "center"}}>New Member? <Link to="/signin" >  Sign In </Link></Card.Footer>
           <Button
@@ -59,6 +63,7 @@ function Login() {
    Login
   </Button> 
         </Card>
+        <ToastContainer/>
       </>
     );
 }

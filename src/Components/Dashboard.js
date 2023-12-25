@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Container, Card, CardFooter, Button, Alert } from 'react-bootstrap';
 import Mountain from '../assest/mountain.jpg';
@@ -7,8 +7,13 @@ import { useNavigate} from "react-router-dom"
 
 function Dashboard() {
     const [error, setError] = useState('');
-    const {logout} = useAuth();
+    const {logout,currentUser} = useAuth();
     const navigate = useNavigate();
+    useEffect(()=>{
+      if(currentUser){
+        console.log(currentUser.email);
+      }
+    },[currentUser])
 
     async function handleLogOut(){
         console.log("called")
@@ -48,19 +53,20 @@ function Dashboard() {
             height: '180px',
           }}
         >
-          {/* Second Image: Profile */}
+  
           <img src={Profile} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
       </Container>
 
      
-      <Container style={{marginTop:"10px"}}>
-        <Card>
+      <Container style={{marginTop:"10px",maxWidth:"400px"}}>
+        <Card >
           <Card.Body >
-          <h3 style={{textAlign: "center"}}>Profile</h3>
+          <h3 style={{textAlign: "center"}}>Welcome</h3>
+         {currentUser && <p style={{textAlign:"center"}}>Email:{currentUser.email}</p>}
           </Card.Body>
         </Card>
-        <CardFooter>
+        <CardFooter style={{textAlign:"center"}}>
            <Button variant='link' onClick={handleLogOut}>Logout</Button>
         </CardFooter>
       </Container>

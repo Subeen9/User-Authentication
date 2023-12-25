@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import PasswordReset from "./PasswordReset";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           </Route>
             <Route path="/signin" element={<Signin />} />
             <Route path="/login" element={<Login />} />
-            
+            <Route path= "/changePassword" element={<PasswordReset/>} />
           </Routes>
         </AuthState>
       </Router>

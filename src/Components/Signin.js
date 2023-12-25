@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import { Card, Button, Form, Alert } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
 function Signin() {
   const {signIn} = useAuth();
   const[error, setError] = useState('');
@@ -24,6 +25,7 @@ function Signin() {
       console.log("email:", emailRef.current.value);
       console.log("password:", passwordRef.current.value);
       await signIn(emailRef.current.value, passwordRef.current.value);
+      toast.success("You are signed in")
       navigate("/")
     } catch(e) {
       console.log("Error", e)
@@ -75,7 +77,7 @@ function Signin() {
   Sign In
 </Button>
 
-        
+        <ToastContainer/>
       </Card>
     </>
   );
