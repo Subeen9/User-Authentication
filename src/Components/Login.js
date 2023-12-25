@@ -13,7 +13,7 @@ function Login() {
     var navigate =useNavigate();
     async function handleSubmit(e){
       e.preventDefault();
-      console.log("function called");
+     // console.log("function called");
       
       try {
         setLoading(true);
